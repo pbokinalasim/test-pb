@@ -5,10 +5,10 @@ flowchart TD
     subgraph PrivateCloud["Amazon Private Cloud"]
       subgraph PublicSubnets["Public Subnets"]
         subgraph PresentationLayer["Presentation Layer"]
-          APIGateway["Amazon API Gateway"]
+          APIGateway["AWS API Gateway"]
           REST["REST API Endpoints"]
-          CognitoAuthorizer["Cognito Authorizer"]
-          CognitoPool["Amazon Cognito<br/>User Pool"]
+          CognitoAuthorizer["AWS Cognito Authorizer"]
+          CognitoPool["AWS Cognito<br/>User Pool"]
           APIGateway --> CognitoAuthorizer
           CognitoPool --> CognitoAuthorizer
           CognitoAuthorizer -->|"HTTPS/TLS"| LambdaFunctions
@@ -25,10 +25,10 @@ flowchart TD
         end
 
         subgraph DataLayer["Data Layer"]
-          AuroraDB["Amazon Aurora"]
-          S3Bucket["Amazon S3 Bucket"]
-          AuroraDB -->|"Encrypted at (KMS)"| S3Bucket
-          S3Bucket -->|"Clinical Data Lake"| AuroraDB
+          AuroraDB["AWS Aurora"]
+          S3Bucket["AWS S3 Bucket"]
+          AuroraDB -->|"HIPPA Compliant encrypted at (KWS). Raw/Processed Files Ecrypted at Rest (KMS) ACID Properties"| S3Bucket 
+          S3Bucket -->|"Clincial Data Lake (HIPPA Compliant). Ecrypted at Rest (SSE-KMLS), Pre-signed URLs"| AuroraDB
         end
       end
     end
