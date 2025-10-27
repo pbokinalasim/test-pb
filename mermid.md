@@ -25,11 +25,14 @@ flowchart TD
         end
 
         subgraph DataLayer["Data Layer"]
-          AuroraDB["AWS Aurora"]
-          S3Bucket["AWS S3 Bucket"]
-          AuroraDB -->|"HIPPA Compliant encrypted at (KWS). Raw/Processed Files Ecrypted at Rest (KMS) ACID Properties"| S3Bucket 
-          S3Bucket -->|"Clincial Data Lake (HIPPA Compliant). Ecrypted at Rest (SSE-KMLS), Pre-signed URLs"| AuroraDB
+          AuroraDB["AWS Aurora"]                   
         end
+
+        subgraph DataLayer["Storage Layer"]          
+          S3Bucket["AWS S3 Bucket"]          
+          S3Bucket -->|"Clincial Data Lake (HIPPA Compliant). Ecrypted at Rest (SSE-KMLS), Pre-signed URLs"| LambdaFunctions
+        end
+
       end
     end
   end
